@@ -1,0 +1,10 @@
+/*      {type: token.ASSIGN, value: '='},
+      {type: token.PLUS, value: '+'},
+      {type: token.LPAREN, value: '('},
+      {type: token.RPAREN, value: ')'},
+      {type: token.LBRACE, value: '{}'},
+      {type: token.RBRACE, value: '}'},
+      {type: token.COMMA, value: ','},
+      {type: token.SEMICOLON, value: ';'},
+      {type: token.EOF, value: ''},
+*/

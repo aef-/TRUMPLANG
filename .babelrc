@@ -1,0 +1,4 @@
+{
+  "presets": ["es2015"],
+  "plugins": [["resolver", {"resolveDirs": ["src", "."]}], "transform-object-rest-spread", "babel-plugin-transform-do-expressions"]
+}
