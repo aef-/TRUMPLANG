@@ -1,13 +1,20 @@
-import {tokens, keywordToType} from 'token';
+import {tokens, keywords, keywordToType} from 'token';
 
 const LETTER_REGEX = /[A-Z_]/i;
 const DIGIT_REGEX = /[0-9]/;
 
 export function getToken(input) {
   const {char} = input;
+  const nextInput = readChar(input);
+
   switch(input.char) {
     case tokens.ASSIGN:
-      return {token: {type: 'ASSIGN', value: char}, input: readChar(input)};
+      if (nextInput.char === '=') {
+        const char = `${input.char + nextInput.char}`;
+        return {token: {type: 'EQ', value: char}, input: readChar(nextInput)};
+      } else {
+        return {token: {type: 'ASSIGN', value: char}, input: readChar(input)};
+      }
     case tokens.SEMICOLON:
       return {token: {type: 'SEMICOLON', value: char}, input: readChar(input)};
     case tokens.LPAREN:
@@ -29,7 +36,12 @@ export function getToken(input) {
     case tokens.LT:
       return {token: {type: 'LT', value: char}, input: readChar(input)};
     case tokens.BANG:
-      return {token: {type: 'BANG', value: char}, input: readChar(input)};
+      if (nextInput.char === '=') {
+        const char = `${input.char + nextInput.char}`;
+        return {token: {type: 'NOT_EQ', value: char}, input: readChar(nextInput)};
+      } else {
+        return {token: {type: 'BANG', value: char}, input: readChar(input)};
+      }
     case tokens.ASTERISK:
       return {token: {type: 'ASTERISK', value: char}, input: readChar(input)};
     case tokens.FSLASH:
@@ -67,11 +79,11 @@ function readDigit(input) {
   return {token: {type: 'INT', value}, input: newInput};
 }
 function isLetter(char) {
-  return LETTER_REGEX.test(char);
+  return char && LETTER_REGEX.test(char);
 }
 
 function isDigit(char) {
-  return DIGIT_REGEX.test(char);
+  return char && DIGIT_REGEX.test(char);
 }
 
 function getChar(str, index) {
@@ -110,7 +122,7 @@ function iter(currInput) {
 
   return {
     token: token,
-    next: input.char ? () => iter(input) : null
+    next: input.char && token.type !== 'ILLEGAL' ? () => iter(input) : null
   };
 }
 

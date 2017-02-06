@@ -10,6 +10,15 @@ let add = fn(x, y) {
 let result = add(five, ten);
 !-*/5;
 5 < 10 > 5;
+
+if (5 < 10) {
+  return true;
+} else {
+  return false;
+}
+
+10 == 10;
+10 != 9;
 `;
 
     const tests = [
@@ -62,6 +71,32 @@ let result = add(five, ten);
       {type: 'INT', value: '10'},
       {type: 'GT', value: '>'},
       {type: 'INT', value: '5'},
+      {type: 'SEMICOLON', value: ';'},
+
+      {type: 'IF', value: 'if'},
+      {type: 'LPAREN', value: '('},
+      {type: 'INT', value: '5'},
+      {type: 'LT', value: '<'},
+      {type: 'INT', value: '10'},
+      {type: 'RPAREN', value: ')'},
+      {type: 'LBRACE', value: '{'},
+      {type: 'RETURN', value: 'return'},
+      {type: 'TRUE', value: 'true'},
+      {type: 'SEMICOLON', value: ';'},
+      {type: 'RBRACE', value: '}'},
+      {type: 'ELSE', value: 'else'},
+      {type: 'LBRACE', value: '{'},
+      {type: 'RETURN', value: 'return'},
+      {type: 'FALSE', value: 'false'},
+      {type: 'SEMICOLON', value: ';'},
+      {type: 'RBRACE', value: '}'},
+      {type: 'INT', value: '10'},
+      {type: 'EQ', value: '=='},
+      {type: 'INT', value: '10'},
+      {type: 'SEMICOLON', value: ';'},
+      {type: 'INT', value: '10'},
+      {type: 'NOT_EQ', value: '!='},
+      {type: 'INT', value: '9'},
       {type: 'SEMICOLON', value: ';'},
     ];
 

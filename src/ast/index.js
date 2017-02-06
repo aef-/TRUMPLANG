@@ -1,0 +1,4 @@
+const types = {
+  STATEMENT: 'STATEMENT',
+  EXPRESSION: 'EXPRESSION'
+};
