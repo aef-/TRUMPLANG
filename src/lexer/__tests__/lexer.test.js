@@ -1,4 +1,4 @@
-import lexer, {getToken} from 'lexer';
+import lexer, {each, getToken} from 'lexer';
 
 describe('Lexer', () => {
   it('should traverse tokens through nextToken', () => {
@@ -98,12 +98,14 @@ if (5 < 10) {
       {type: 'NOT_EQ', value: '!='},
       {type: 'INT', value: '9'},
       {type: 'SEMICOLON', value: ';'},
+      {type: 'EOF', value: null},
     ];
 
-    tests.reduce((token, expectedToken) => {
-      expect(token.token.type).toBe(expectedToken.type);
-      expect(token.token.value).toBe(expectedToken.value);
-      return (token.next && token.next()) || false;
-    }, lexer(input));
+    const l = lexer(input);
+    each(l, (token, index) => {
+      const testToken = tests[index];
+      expect(token.type).toBe(testToken.type);
+      expect(token.value).toBe(testToken.value);
+    });
   });
 });

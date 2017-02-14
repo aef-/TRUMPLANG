@@ -113,21 +113,22 @@ function isWhitespace(char) {
   return char === ' ' || char === '\t' || char === '\n' || char === '\r';
 }
 
-function iter(currInput) {
+export function getNextToken(currInput) {
   if (isWhitespace(currInput.char)) {
-    return iter(readChar(currInput));
+    return getNextToken(readChar(currInput));
+  } else {
+    return getToken(currInput);
   }
+};
 
-  const {input, token} = getToken(currInput);
-
-  return {
-    token: token,
-    next: input.char && token.type !== 'ILLEGAL' ? () => iter(input) : null
-  };
+export function each(currInput, fn, index = 0) {
+  const {input, token} = getNextToken(currInput);
+  fn(token, index);
+  if (input.char && token.type !== 'ILLEGAL') {
+    each(input, fn, index + 1);
+  }
 }
 
 export default (str) => {
-  // const inputBuffer = new Buffer(input, 'utf16le');
-
-  return iter(readChar({str, readPosition: 0, position: 0, char: null}));
+  return readChar({str, readPosition: 0, position: -1, char: null});
 };
